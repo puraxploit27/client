@@ -1,0 +1,1312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>GR ASSOCIATES | Projects – Building the Future</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800;14..32,900&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- AOS (Animate on Scroll) Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #fef8ed;
+            color: #1e2a47;
+            line-height: 1.5;
+            overflow-x: hidden;
+            cursor: none;
+        }
+
+        :root {
+            --gold: #d4af37;
+            --gold-dark: #b28b2c;
+            --navy: #0a192f;
+            --cream: #fdf8ed;
+            --cream-dark: #f5efdf;
+            --gray-text: #4a5568;
+            --shadow-sm: 0 10px 25px -5px rgba(0,0,0,0.05), 0 8px 10px -6px rgba(0,0,0,0.02);
+            --shadow-md: 0 20px 30px -12px rgba(0,0,0,0.1);
+            --transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+        }
+
+        /* Custom Cursor */
+        .cursor-dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--gold);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.1s ease;
+        }
+        .cursor-outline {
+            width: 40px;
+            height: 40px;
+            border: 2px solid var(--gold);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9998;
+            transition: all 0.15s ease-out;
+            backdrop-filter: blur(2px);
+        }
+        .cursor-dot.hover, .cursor-outline.hover {
+            transform: scale(1.5);
+            background-color: var(--gold-dark);
+            border-color: var(--gold-dark);
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--cream-dark);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--gold);
+            border-radius: 10px;
+        }
+
+        /* Navbar – light cream, no negative margin */
+        .navbar {
+            background: rgba(253, 248, 237, 0.96);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 0.8rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .navbar.scrolled {
+            background: rgba(253, 248, 237, 0.98);
+            padding: 0.5rem 0;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: flex-end;
+            gap: 1rem;
+            flex-shrink: 0;
+        }
+        .logo-img {
+            height: 70px;
+            width: auto;
+            object-fit: contain;
+            transition: transform 0.3s ease;
+        }
+        .logo-img:hover {
+            transform: scale(1.02);
+        }
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.2;
+        }
+        .logo-main {
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+        .logo-main .gr {
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .logo-main .associates {
+            color: var(--navy);
+        }
+        .logo-tagline {
+            font-size: 0.7rem;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            color: var(--navy);
+            text-transform: uppercase;
+            margin-top: 2px;
+            opacity: 0.8;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+            font-weight: 500;
+        }
+        .nav-links a {
+            text-decoration: none;
+            color: var(--navy);
+            transition: all 0.3s ease;
+            padding: 0.5rem 0;
+            font-size: 1rem;
+            letter-spacing: 0.3px;
+            position: relative;
+        }
+        .nav-links a:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gold);
+            transition: width 0.3s ease;
+        }
+        .nav-links a:hover:after,
+        .nav-links a.active:after {
+            width: 100%;
+        }
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--gold);
+        }
+
+        .menu-toggle {
+            display: none;
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: var(--navy);
+        }
+
+        .btn-primary {
+            background: linear-gradient(105deg, var(--gold), var(--gold-dark));
+            color: var(--navy);
+            padding: 0.9rem 2.2rem;
+            border-radius: 50px;
+            font-weight: 700;
+            display: inline-block;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
+        }
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(212, 175, 55, 0.4);
+        }
+
+        /* Hero Section – Image Slideshow (full screen) */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            overflow: hidden;
+            margin-top: 0;
+        }
+        .hero-slides {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+        .hero-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            transition: opacity 1.2s ease-in-out;
+            opacity: 0;
+        }
+        .hero-slide.active {
+            opacity: 1;
+        }
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 2;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 6rem 1rem;
+        }
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            line-height: 1.2;
+            background: linear-gradient(135deg, #ffffff, var(--gold), #ffdf8c);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease-out;
+        }
+        .hero p {
+            font-size: 1.2rem;
+            color: #e0d6c0;
+            max-width: 700px;
+            margin: 0 auto;
+            animation: fadeInUp 1s ease-out 0.2s backwards;
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Slideshow indicator */
+        .slide-indicator {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 12px;
+            z-index: 15;
+        }
+        .slide-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.5);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .slide-dot.active {
+            background: var(--gold);
+            transform: scale(1.3);
+            box-shadow: 0 0 8px var(--gold);
+        }
+        .slide-dot:hover {
+            background: var(--gold);
+        }
+
+        /* Section Titles */
+        .section-title {
+            font-size: 2.5rem;
+            text-align: center;
+            color: var(--navy);
+            margin-bottom: 0.5rem;
+            font-weight: 800;
+            position: relative;
+        }
+        .section-title:after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 3px;
+            background: var(--gold);
+            margin: 0.8rem auto 0;
+            border-radius: 2px;
+        }
+        .section-sub {
+            text-align: center;
+            color: var(--gray-text);
+            margin-bottom: 3rem;
+            font-size: 1.1rem;
+        }
+
+        /* Projects Grid */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        .project-card {
+            background: white;
+            border-radius: 28px;
+            overflow: hidden;
+            transition: var(--transition);
+            border: 1px solid #efebe3;
+            box-shadow: var(--shadow-sm);
+            cursor: pointer;
+        }
+        .project-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--gold);
+            box-shadow: var(--shadow-md);
+        }
+        .project-img {
+            height: 220px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        .status-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            padding: 0.3rem 1rem;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            background: var(--gold);
+            color: var(--navy);
+        }
+        .status-badge.ongoing {
+            background: #e67e22;
+            color: white;
+        }
+        .status-badge.completed {
+            background: #27ae60;
+            color: white;
+        }
+        .project-content {
+            padding: 1.5rem;
+        }
+        .project-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 0.5rem;
+        }
+        .project-location {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--gold);
+            font-size: 0.85rem;
+            margin-bottom: 0.8rem;
+        }
+        .project-desc {
+            font-size: 0.9rem;
+            color: var(--gray-text);
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+        .project-link {
+            color: var(--gold);
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: gap 0.2s;
+        }
+        .project-link:hover {
+            gap: 0.8rem;
+        }
+
+        /* Lightbox Modal with Zoomable Gallery */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+        .lightbox.active {
+            display: flex;
+        }
+        .lightbox-content {
+            max-width: 90%;
+            max-height: 90%;
+            background: var(--cream);
+            border-radius: 28px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            cursor: default;
+            width: 800px;
+        }
+        .lightbox-gallery {
+            position: relative;
+            background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            min-height: 300px;
+        }
+        .image-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            cursor: grab;
+        }
+        .image-container:active {
+            cursor: grabbing;
+        }
+        .lightbox-img {
+            max-width: 100%;
+            max-height: 55vh;
+            object-fit: contain;
+            transition: transform 0.2s ease;
+            transform-origin: center center;
+        }
+        .lightbox-img.zoomed {
+            transform: scale(2);
+            cursor: zoom-out;
+        }
+        .gallery-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0,0,0,0.6);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: 0.2s;
+            z-index: 10;
+        }
+        .gallery-nav:hover {
+            background: var(--gold);
+            color: var(--navy);
+        }
+        .gallery-prev {
+            left: 15px;
+        }
+        .gallery-next {
+            right: 15px;
+        }
+        .image-counter {
+            position: absolute;
+            bottom: 10px;
+            right: 15px;
+            background: rgba(0,0,0,0.6);
+            color: white;
+            padding: 0.2rem 0.6rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            z-index: 10;
+        }
+        .zoom-btn {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: rgba(0,0,0,0.6);
+            color: white;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: 0.2s;
+            z-index: 10;
+            font-size: 1rem;
+        }
+        .zoom-btn:hover {
+            background: var(--gold);
+            color: var(--navy);
+        }
+        .reset-zoom-btn {
+            position: absolute;
+            top: 15px;
+            left: 60px;
+            background: rgba(0,0,0,0.6);
+            color: white;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: 0.2s;
+            z-index: 10;
+            font-size: 1rem;
+        }
+        .reset-zoom-btn.show {
+            display: flex;
+        }
+        .reset-zoom-btn:hover {
+            background: var(--gold);
+            color: var(--navy);
+        }
+        .lightbox-details {
+            padding: 1.5rem;
+        }
+        .lightbox-details h3 {
+            font-size: 1.5rem;
+            color: var(--navy);
+            margin-bottom: 0.5rem;
+        }
+        .lightbox-details .lightbox-location {
+            color: var(--gold);
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .lightbox-details .lightbox-desc {
+            color: var(--gray-text);
+            margin-bottom: 1rem;
+        }
+        .lightbox-details .lightbox-status {
+            display: inline-block;
+            padding: 0.3rem 1rem;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            background: var(--gold);
+            color: var(--navy);
+        }
+        .lightbox-details .lightbox-status.ongoing {
+            background: #e67e22;
+            color: white;
+        }
+        .lightbox-details .lightbox-status.completed {
+            background: #27ae60;
+            color: white;
+        }
+        .close-lightbox {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            background: rgba(0,0,0,0.5);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.2s;
+            z-index: 20;
+        }
+        .close-lightbox:hover {
+            background: var(--gold);
+            color: var(--navy);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--navy);
+            padding: 3rem 0 1.5rem;
+            margin-top: 4rem;
+            border-top: 1px solid rgba(212, 175, 55, 0.2);
+        }
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 2rem;
+            align-items: center;
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        .footer-brand h3 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 0.6rem;
+            color: var(--gold);
+        }
+        .footer-links ul {
+            list-style: none;
+            display: flex;
+            gap: 1.8rem;
+            flex-wrap: wrap;
+        }
+        .footer-links a {
+            color: #ccc2a8;
+            transition: 0.2s;
+            text-decoration: none;
+        }
+        .footer-links a:hover {
+            color: var(--gold);
+        }
+        .footer-contact span {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin: 0.5rem 0;
+            color: #ccc2a8;
+        }
+        .footer-contact i {
+            color: var(--gold);
+        }
+        .footer-copyright {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(212, 175, 55, 0.2);
+            font-size: 0.8rem;
+            color: #aaa;
+        }
+
+        @media (max-width: 850px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                background: var(--cream);
+                backdrop-filter: blur(12px);
+                padding: 1.5rem 0;
+                gap: 1rem;
+                text-align: center;
+            }
+            .nav-links.show {
+                display: flex;
+            }
+            .menu-toggle {
+                display: block;
+            }
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            .container {
+                padding: 0 1.2rem;
+            }
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            .logo {
+                gap: 0.6rem;
+            }
+            .logo-img {
+                height: 55px;
+            }
+            .logo-main {
+                font-size: 1.2rem;
+            }
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+            body {
+                cursor: auto;
+            }
+            .cursor-dot, .cursor-outline {
+                display: none;
+            }
+            .slide-indicator {
+                bottom: 15px;
+            }
+            .slide-dot {
+                width: 8px;
+                height: 8px;
+            }
+            .gallery-nav {
+                width: 30px;
+                height: 30px;
+            }
+            .zoom-btn, .reset-zoom-btn {
+                width: 30px;
+                height: 30px;
+                font-size: 0.8rem;
+            }
+            .reset-zoom-btn {
+                left: 55px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Custom Cursor Elements -->
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+
+    <!-- Navbar -->
+    <header class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <img class="logo-img" src="logo.png" alt="GR ASSOCIATES Logo" onerror="this.src='https://placehold.co/70x70?text=GR'">
+                <div class="logo-text">
+                    <div class="logo-main">
+                        <span class="gr">GR</span> <span class="associates">ASSOCIATES</span>
+                    </div>
+                    <div class="logo-tagline">
+                        CIVIL & INTERIOR
+                    </div>
+                </div>
+            </div>
+            <div class="menu-toggle" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="projects.html" class="active">Projects</a></li>
+                <li><a href="contact.html">Contact Us</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Hero Section with Image Slideshow -->
+    <section class="hero">
+        <div class="hero-slides">
+            <div class="hero-slide active" style="background-image: url('https://images.pexels.com/photos/159306/construction-site-build-construction-work-159306.jpeg?auto=compress&cs=tinysrgb&w=1600');"></div>
+            <div class="hero-slide" style="background-image: url('https://images.pexels.com/photos/2760242/pexels-photo-2760242.jpeg?auto=compress&cs=tinysrgb&w=1600');"></div>
+            <div class="hero-slide" style="background-image: url('https://images.pexels.com/photos/2067569/pexels-photo-2067569.jpeg?auto=compress&cs=tinysrgb&w=1600');"></div>
+            <div class="hero-slide" style="background-image: url('https://images.pexels.com/photos/290595/pexels-photo-290595.jpeg?auto=compress&cs=tinysrgb&w=1600');"></div>
+            <div class="hero-slide" style="background-image: url('https://images.pexels.com/photos/2760241/pexels-photo-2760241.jpeg?auto=compress&cs=tinysrgb&w=1600');"></div>
+        </div>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1>Our Projects</h1>
+            <p>Transforming visions into landmarks — explore our journey of excellence</p>
+        </div>
+        <div class="slide-indicator">
+            <div class="slide-dot active" data-slide="0"></div>
+            <div class="slide-dot" data-slide="1"></div>
+            <div class="slide-dot" data-slide="2"></div>
+            <div class="slide-dot" data-slide="3"></div>
+            <div class="slide-dot" data-slide="4"></div>
+        </div>
+    </section>
+
+    <!-- Ongoing Projects Section (Only 1 Project) -->
+    <div class="container" data-aos="fade-up" data-aos-duration="800">
+        <h2 class="section-title">Ongoing Projects</h2>
+        <p class="section-sub">Currently shaping the future</p>
+        <div class="projects-grid" id="ongoingGrid">
+            <!-- Project 1 - Only ongoing project -->
+            <div class="project-card" data-title="The Imperial Heights" data-location="Andheri East, Mumbai" data-desc="A 32-story luxury residential tower with premium amenities, smart home automation, and panoramic sea views. Completion expected Dec 2026." data-status="ongoing" data-images="image24.jpeg,image25.jpeg">
+                <div class="project-img" style="background-image: url('image24.jpeg'); background-size: cover;">
+                    <div class="status-badge ongoing">Ongoing</div>
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title">The Imperial Heights</h3>
+                    <div class="project-location"><i class="fas fa-map-marker-alt"></i> Andheri East, Mumbai</div>
+                    <p class="project-desc">A 32-story luxury residential tower with premium amenities, smart home automation, and panoramic sea views. Completion expected Dec 2026.</p>
+                    <a href="#" class="project-link">View Details <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Completed Projects Section (14 projects total - added 2 new) -->
+    <div class="container" data-aos="fade-up" data-aos-duration="800">
+        <h2 class="section-title">Completed Projects</h2>
+        <p class="section-sub">Delivering excellence, one project at a time</p>
+        <div class="projects-grid" id="completedGrid">
+            <!-- Project 2 -->
+            <div class="project-card" data-title="Online instrument" data-location="Mahadevpura, Bangalore" data-desc="Successfully completed a premium residential apartment project in Mahadevpura in 2010, showcasing modern design, quality construction, and elegant finishing." data-status="completed" data-images="image1.jpeg,image6.jpeg">
+                <div class="project-img" style="background-image: url('image1.jpeg'); background-size: cover;">
+                    <div class="status-badge completed">Completed 2010</div>
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title">Online instrument</h3>
+                    <div class="project-location"><i class="fas fa-map-marker-alt"></i> Mahadevpura, Bangalore</div>
+                    <p class="project-desc">Successfully completed a premium residential apartment project in Mahadevpura in 2010, showcasing modern design, quality construction, and elegant finishing.</p>
+                    <a href="#" class="project-link">View Details <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            <!-- Project 3 -->
+            <div class="project-card" data-title="Mosque" data-location="Chikmagalur, Karnataka" data-desc="Successfully completed a mosque project in Chikmagalur in 2014, delivering elegant design, quality construction, and a peaceful architectural presence." data-status="completed" data-images="image2.jpeg,image7.jpeg">
+                <div class="project-img" style="background-image: url('image2.jpeg'); background-size: cover;">
+                    <div class="status-badge completed">Completed 2014</div>
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title">Mosque</h3>
+                    <div class="project-location"><i class="fas fa-map-marker-alt"></i>Chikmagalur, Karnataka</div>
+                    <p class="project-desc">Successfully completed a mosque project in Chikmagalur in 2014, delivering elegant design, quality construction, and a peaceful architectural presenc</p>
+                    <a href="#" class="project-link">View Details <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            <!-- Project 4 -->
+            <div class="project-card" data-title="Electronic City" data-location="Electronic City, Karnataka" data-desc="Successfully completed a commercial glass-structured building in Electronic City in 2012, featuring modern design, premium glazing, and high-quality execution." data-status="completed" data-images="image3.jpeg,image8.jpeg">
+                <div class="project-img" style="background-image: url('image3.jpeg'); background-size: cover;">
+                    <div class="status-badge completed">Completed 2012</div>
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title">Electronic City</h3>
+                    <div class="project-location"><i class="fas fa-map-marker-alt"></i> Electronic City, Karnataka</div>
+                    <p class="project-desc">Successfully completed a commercial glass-structured building in Electronic City in 2012, featuring modern design, premium glazing, and high-quality execution.</p>
+                    <a href="#" class="project-link">View Details <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            <!-- Project 5 -->
+            <div class="project-card" data-title="Super Speciality Hospital" data-location="Rajajinagar, Karnataka" data-desc="Successfully completed a super speciality hospital façade project, featuring premium ACP cladding and glass elevation with modern design and high-quality execution." data-status="completed" data-images="image4.jpeg,image9.jpeg">
+                <div class="project-img" style="background-image: url('image4.jpeg'); background-size: cover;">
+                    <div class="status-badge completed">Completed 2013</div>
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title">Super Speciality Hospital</h3>
+                    <div class="project-location"><i class="fas fa-map-marker-alt"></i> Rajajinagar, Karnataka</div>
+                    <p class="project-desc">Successfully completed a super speciality hospital façade project, featuring premium ACP cladding and glass elevation with modern design and high-quality execution.</p>
+                    <a href="#" class="project-link">View Details <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            <!-- Project 6 -->
+            <div class="project-card" data-title="RV college vip lounge" data-location="RV College, Karnataka" data-desc="Successfully completed the VIP lounge project at RV College, delivering premium interiors with elegant design and high-quality finishing." data-status="completed" data-images="image5.jpeg,image10.jpeg">
+                <div class="project-img" style="background-image: url('image5.jpeg'); background-size: cover;">
+                    <div class="status-badge completed">Completed 2022</div>
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title">RV college vip lounge</h3>
+                    <div class="project-location"><i class="fas fa-map-marker-alt"></i> RV College, Karnataka</div>
+                    <p class="project-desc">Successfully completed the VIP lounge project at RV College, delivering premium interiors with elegant design and high-quality finishing.</p>
+                    <a href="#" class="project-link">View Details <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            <!-- Project 7 -->
+            <div class="project-card" data-title="Beer Library" data-location="Koramangala, Bangalore" data-desc="Successfully completed The Beer Library project in Koramangala in 2016, delivering a stylish ambiance with premium finishes and high-quality execution." data-status="completed" data-images="image11.jpeg">
+                <div class="project-img" style="background-image: url('image11.jpeg'); background-size: cover;">
+                    <div class="status-badge completed">Completed 2016</div>
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title">Beer Library</h3>
+                    <div class="project-location"><i class="fas fa-map-marker-alt"></i> Koramangala, Bangalore</div>
+                    <p class="project-desc">Successfully completed The Beer Library project in Koramangala in 2016, delivering a stylish ambiance with premium finishes and high-quality execution.</p>
+                    <a href="#" class="project-link">View Details <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            <!-- Project 8 -->
+            <div class="project-card" data-title="Mahalaxmi Layout" data-location="Mahalaxmi Layout, Bangalore" data-desc="Successfully completed a residential building project in Mahalaxmi Layout in 2019, delivering modern design, quality construction, and elegant finishing." data-status="completed" data-images="image12.jpeg,image13.jpeg">
+                <div class="project-img" style="background-image: url('image13.jpeg'); background-size: cover;">
+                    <div class="status-badge completed">Completed 2019</div>
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title">Mahalaxmi Layout</h3>
+                    <div class="project-location"><i class="fas fa-map-marker-alt"></i> Mahalaxmi Layout, Bangalore</div>
+                    <p class="project-desc">Successfully completed a residential building project in Mahalaxmi Layout in 2019, delivering modern design, quality construction, and elegant finishing.</p>
+                    <a href="#" class="project-link">View Details <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            <!-- Project 9 -->
+            <div class="project-card" data-title="CMR University, cricket stadium" data-location="CMR University, Bangalore" data-desc="Successfully completed the cricket stadium project at CMR University in 2022, delivering modern infrastructure with high-quality construction and professional execution." data-status="completed" data-images="image14.jpeg,image15.jpeg">
+                <div class="project-img" style="background-image: url('image15.jpeg'); background-size: cover;">
+                    <div class="status-badge completed">Completed 2022</div>
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title">CMR University, cricket stadium</h3>
+                    <div class="project-location"><i class="fas fa-map-marker-alt"></i> CMR University, Bangalore</div>
+                    <p class="project-desc">Successfully completed the cricket stadium project at CMR University in 2022, delivering modern infrastructure with high-quality construction and professional execution.</p>
+                    <a href="#" class="project-link">View Details <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            <!-- Project 10 -->
+            <div class="project-card" data-title="Hosakerehalli" data-location="Hosakerehalli, Bangalore" data-desc="Successfully completed a residential building project in Hosakerehalli in 2021, delivering modern design, quality construction, and elegant finishing." data-status="completed" data-images="image16.jpeg,image17.jpeg">
+                <div class="project-img" style="background-image: url('image17.jpeg'); background-size: cover;">
+                    <div class="status-badge completed">Completed 2021</div>
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title">Hosakerehalli</h3>
+                    <div class="project-location"><i class="fas fa-map-marker-alt"></i> Hosakerehalli, Bangalore</div>
+                    <p class="project-desc">Successfully completed a residential building project in Hosakerehalli in 2021, delivering modern design, quality construction, and elegant finishing.</p>
+                    <a href="#" class="project-link">View Details <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            <!-- Project 11 -->
+            <div class="project-card" data-title="farmhouse" data-location="Maddur, Karnataka" data-desc="Successfully completed a farmhouse project in Maddur in 2006, delivering a peaceful design with quality construction and natural surroundings." data-status="completed" data-images="image18.jpeg,image19.jpeg">
+                <div class="project-img" style="background-image: url('image18.jpeg'); background-size: cover;">
+                    <div class="status-badge completed">Completed 2006</div>
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title">farmhouse</h3>
+                    <div class="project-location"><i class="fas fa-map-marker-alt"></i> Maddur, Karnataka</div>
+                    <p class="project-desc">Successfully completed a farmhouse project in Maddur in 2006, delivering a peaceful design with quality construction and natural surroundings.</p>
+                    <a href="#" class="project-link">View Details <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            <!-- Project 12 -->
+            <div class="project-card" data-title="farmhouse project in Madugiri" data-location="Madugiri, Tumakuru" data-desc="Successfully completed a farmhouse project in Madugiri, Tumakuru in 2020, delivering a serene design with quality construction and natural surroundings." data-status="completed" data-images="image20.jpeg,image21.jpeg">
+                <div class="project-img" style="background-image: url('image20.jpeg'); background-size: cover;">
+                    <div class="status-badge completed">Completed 2020</div>
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title">farmhouse project in Madugiri</h3>
+                    <div class="project-location"><i class="fas fa-map-marker-alt"></i> Madugiri, Tumakuru</div>
+                    <p class="project-desc">Successfully completed a farmhouse project in Madugiri, Tumakuru in 2020, delivering a serene design with quality construction and natural surroundings.</p>
+                    <a href="#" class="project-link">View Details <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            <!-- Project 13 -->
+            <div class="project-card" data-title="VIP lounge" data-location="RV College, Karnataka" data-desc="Successfully completed the VIP lounge project at RV College in 2018, delivering premium interiors with elegant design and high-quality finishing." data-status="completed" data-images="image22.jpeg,image23.jpeg">
+                <div class="project-img" style="background-image: url('image22.jpeg'); background-size: cover;">
+                    <div class="status-badge completed">Completed 2018</div>
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title">VIP lounge</h3>
+                    <div class="project-location"><i class="fas fa-map-marker-alt"></i> RV College, Karnataka</div>
+                    <p class="project-desc">Successfully completed the VIP lounge project at RV College in 2018, delivering premium interiors with elegant design and high-quality finishing.</p>
+                    <a href="#" class="project-link">View Details <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            <!-- NEW PROJECT 14 -->
+            <div class="project-card" data-title=" farmhouse project in Doddaballapura" data-location="Doddaballapura, Karnataka" data-desc="Successfully completed a farmhouse project in Doddaballapura in 2015, delivering a serene design with quality construction and natural surroundings." data-status="completed" data-images="image26.jpeg,image27.jpeg">
+                <div class="project-img" style="background-image: url('image26.jpeg'); background-size: cover;">
+                    <div class="status-badge completed">Completed 2015</div>
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title"> farmhouse project in Doddaballapura</h3>
+                    <div class="project-location"><i class="fas fa-map-marker-alt"></i> Doddaballapura, Karnataka</div>
+                    <p class="project-desc">Successfully completed a farmhouse project in Doddaballapura in 2015, delivering a serene design with quality construction and natural surroundings.</p>
+                    <a href="#" class="project-link">View Details <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            <!-- NEW PROJECT 15 -->
+            <div class="project-card" data-title="Ambika Apartment" data-location=" Sarakki, Karnataka" data-desc="Successfully completed Ambika Apartment project in Sarakki in 2012, delivering quality construction, modern design, and reliable execution." data-status="completed" data-images="image28.jpeg,image29.jpeg">
+                <div class="project-img" style="background-image: url('image28.jpeg'); background-size: cover;">
+                    <div class="status-badge completed">Completed 2012</div>
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title">Ambika Apartment</h3>
+                    <div class="project-location"><i class="fas fa-map-marker-alt"></i> Sarakki, Karnataka</div>
+                    <p class="project-desc">Successfully completed Ambika Apartment project in Sarakki in 2012, delivering quality construction, modern design, and reliable execution.</p>
+                    <a href="#" class="project-link">View Details <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CTA Section -->
+    <div class="container" data-aos="zoom-in">
+        <div class="cta-section" style="background: linear-gradient(135deg, var(--navy), #030e1a); border-radius: 48px; padding: 3rem; text-align: center; margin: 4rem 0; border: 1px solid rgba(212, 175, 55, 0.3); position: relative; overflow: hidden; box-shadow: 0 20px 35px -10px rgba(0,0,0,0.3);">
+            <div style="position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(223, 172, 7, 0.1), transparent); animation: rotate 20s linear infinite; z-index: 0;"></div>
+            <div style="position: absolute; bottom: 0; left: 0; width: 100%; height: 2px; background: linear-gradient(90deg, transparent, var(--gold), transparent); animation: slide 3s ease-in-out infinite;"></div>
+            <h3 style="font-size: 2.2rem; margin-bottom: 1rem; color: #f0e6d0; position: relative; z-index: 1;">Have a Project in Mind?</h3>
+            <p style="color: #ccc2a8; position: relative; z-index: 1;">Let's discuss how we can bring your vision to life.</p>
+            <a href="contact.html" class="btn-primary" style="margin-top: 1rem; display: inline-block; position: relative; z-index: 1;">Contact Us <i class="fas fa-arrow-right"></i></a>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <h3>GR ASSOCIATES</h3>
+                <p>Reliable contracting partner since 2026</p>
+            </div>
+            <div class="footer-links">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="projects.html">Projects</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-contact">
+                <span><i class="fas fa-phone-alt"></i> +91 99800 53759</span>
+                <span><i class="fas fa-envelope"></i> contact@grassociates.com</span>
+                <span><i class="fas fa-map-marker-alt"></i>Bangalore</span>
+            </div>
+        </div>
+        <div class="footer-copyright">
+            <p>© 2026 GR ASSOCIATES — Built with integrity and precision. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Lightbox Modal with Zoomable Gallery -->
+    <div class="lightbox" id="lightbox">
+        <div class="lightbox-content">
+            <span class="close-lightbox">&times;</span>
+            <div class="lightbox-gallery">
+                <div class="gallery-nav gallery-prev"><i class="fas fa-chevron-left"></i></div>
+                <div class="image-container" id="imageContainer">
+                    <img class="lightbox-img" id="lightboxImg" src="" alt="Project Image">
+                </div>
+                <div class="gallery-nav gallery-next"><i class="fas fa-chevron-right"></i></div>
+                <div class="zoom-btn" id="zoomBtn"><i class="fas fa-search-plus"></i></div>
+                <div class="reset-zoom-btn" id="resetZoomBtn"><i class="fas fa-undo-alt"></i></div>
+                <div class="image-counter" id="imageCounter">1 / 3</div>
+            </div>
+            <div class="lightbox-details">
+                <h3 id="lightboxTitle"></h3>
+                <div class="lightbox-location" id="lightboxLocation"><i class="fas fa-map-marker-alt"></i> <span></span></div>
+                <p class="lightbox-desc" id="lightboxDesc"></p>
+                <span class="lightbox-status" id="lightboxStatus"></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ once: true, offset: 100 });
+
+        // Sticky navbar
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) navbar.classList.add('scrolled');
+            else navbar.classList.remove('scrolled');
+        });
+
+        // Mobile menu
+        const mobileBtn = document.getElementById('mobileMenuBtn');
+        const navLinks = document.getElementById('navLinks');
+        if (mobileBtn) {
+            mobileBtn.addEventListener('click', () => navLinks.classList.toggle('show'));
+        }
+
+        // Hero slideshow
+        const slides = document.querySelectorAll('.hero-slide');
+        const dots = document.querySelectorAll('.slide-dot');
+        let currentSlide = 0;
+        let slideInterval;
+
+        function showSlide(index) {
+            slides.forEach((slide, i) => {
+                slide.classList.toggle('active', i === index);
+            });
+            dots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === index);
+            });
+            currentSlide = index;
+        }
+
+        function nextSlide() {
+            const next = (currentSlide + 1) % slides.length;
+            showSlide(next);
+        }
+
+        function startSlideshow() {
+            if (slideInterval) clearInterval(slideInterval);
+            slideInterval = setInterval(nextSlide, 5000);
+        }
+
+        dots.forEach((dot, idx) => {
+            dot.addEventListener('click', () => {
+                showSlide(idx);
+                startSlideshow();
+            });
+        });
+        startSlideshow();
+
+        // Lightbox with multi-image gallery and zoom
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightboxImg');
+        const lightboxTitle = document.getElementById('lightboxTitle');
+        const lightboxLocationSpan = document.getElementById('lightboxLocation').querySelector('span');
+        const lightboxDesc = document.getElementById('lightboxDesc');
+        const lightboxStatus = document.getElementById('lightboxStatus');
+        const imageCounter = document.getElementById('imageCounter');
+        const prevBtn = document.querySelector('.gallery-prev');
+        const nextBtn = document.querySelector('.gallery-next');
+        const zoomBtn = document.getElementById('zoomBtn');
+        const resetZoomBtn = document.getElementById('resetZoomBtn');
+        const imageContainer = document.getElementById('imageContainer');
+
+        let currentImages = [];
+        let currentImageIndex = 0;
+        let isZoomed = false;
+
+        function resetZoom() {
+            if (isZoomed) {
+                lightboxImg.classList.remove('zoomed');
+                imageContainer.style.overflow = 'auto';
+                imageContainer.style.cursor = 'grab';
+                isZoomed = false;
+                resetZoomBtn.classList.remove('show');
+            }
+        }
+
+        function toggleZoom() {
+            if (!isZoomed) {
+                lightboxImg.classList.add('zoomed');
+                imageContainer.style.overflow = 'auto';
+                imageContainer.style.cursor = 'grab';
+                isZoomed = true;
+                resetZoomBtn.classList.add('show');
+            } else {
+                resetZoom();
+            }
+        }
+
+        function updateLightboxImage() {
+            resetZoom();
+            lightboxImg.src = currentImages[currentImageIndex];
+            imageCounter.textContent = `${currentImageIndex + 1} / ${currentImages.length}`;
+        }
+
+        function openLightbox(projectCard) {
+            const title = projectCard.getAttribute('data-title');
+            const location = projectCard.getAttribute('data-location');
+            const desc = projectCard.getAttribute('data-desc');
+            const status = projectCard.getAttribute('data-status');
+            const imagesStr = projectCard.getAttribute('data-images');
+            currentImages = imagesStr.split(',');
+            currentImageIndex = 0;
+
+            lightboxTitle.textContent = title;
+            lightboxLocationSpan.textContent = location;
+            lightboxDesc.textContent = desc;
+            lightboxStatus.textContent = status === 'ongoing' ? 'Ongoing' : 'Completed';
+            lightboxStatus.className = 'lightbox-status';
+            if (status === 'ongoing') {
+                lightboxStatus.classList.add('ongoing');
+            } else {
+                lightboxStatus.classList.add('completed');
+            }
+
+            updateLightboxImage();
+            lightbox.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        const projectCards = document.querySelectorAll('.project-card');
+
+        projectCards.forEach(card => {
+            card.addEventListener('click', (e) => {
+                if (e.target.closest('.project-link')) {
+                    e.stopPropagation();
+                    return;
+                }
+                openLightbox(card);
+            });
+        });
+
+        // Gallery navigation
+        prevBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (currentImages.length === 0) return;
+            currentImageIndex = (currentImageIndex - 1 + currentImages.length) % currentImages.length;
+            updateLightboxImage();
+        });
+
+        nextBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (currentImages.length === 0) return;
+            currentImageIndex = (currentImageIndex + 1) % currentImages.length;
+            updateLightboxImage();
+        });
+
+        // Zoom functionality
+        zoomBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            toggleZoom();
+        });
+
+        resetZoomBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            resetZoom();
+        });
+
+        // Double-click on image to zoom
+        lightboxImg.addEventListener('dblclick', (e) => {
+            e.stopPropagation();
+            toggleZoom();
+        });
+
+        // Close lightbox
+        const closeBtn = document.querySelector('.close-lightbox');
+        closeBtn.addEventListener('click', () => {
+            lightbox.classList.remove('active');
+            document.body.style.overflow = 'auto';
+            resetZoom();
+        });
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) {
+                lightbox.classList.remove('active');
+                document.body.style.overflow = 'auto';
+                resetZoom();
+            }
+        });
+        document.addEventListener('keydown', (e) => {
+            if (lightbox.classList.contains('active')) {
+                if (e.key === 'Escape') {
+                    lightbox.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                    resetZoom();
+                } else if (e.key === 'ArrowLeft') {
+                    prevBtn.click();
+                } else if (e.key === 'ArrowRight') {
+                    nextBtn.click();
+                }
+            }
+        });
+
+        // Panning functionality for zoomed image
+        let isPanning = false;
+        let startX, startY, scrollLeft, scrollTop;
+
+        imageContainer.addEventListener('mousedown', (e) => {
+            if (!isZoomed) return;
+            isPanning = true;
+            startX = e.clientX;
+            startY = e.clientY;
+            scrollLeft = imageContainer.scrollLeft;
+            scrollTop = imageContainer.scrollTop;
+            imageContainer.style.cursor = 'grabbing';
+            e.preventDefault();
+        });
+
+        window.addEventListener('mousemove', (e) => {
+            if (!isPanning) return;
+            const dx = e.clientX - startX;
+            const dy = e.clientY - startY;
+            imageContainer.scrollLeft = scrollLeft - dx;
+            imageContainer.scrollTop = scrollTop - dy;
+        });
+
+        window.addEventListener('mouseup', () => {
+            if (isPanning) {
+                isPanning = false;
+                if (imageContainer) imageContainer.style.cursor = 'grab';
+            }
+        });
+
+        // Custom cursor
+        const cursorDot = document.querySelector('.cursor-dot');
+        const cursorOutline = document.querySelector('.cursor-outline');
+        if (cursorDot && cursorOutline) {
+            window.addEventListener('mousemove', function(e) {
+                cursorDot.style.transform = `translate(${e.clientX - 4}px, ${e.clientY - 4}px)`;
+                cursorOutline.style.transform = `translate(${e.clientX - 20}px, ${e.clientY - 20}px)`;
+            });
+            const interactiveElements = document.querySelectorAll('a, button, .btn-primary, .project-card, .slide-dot, .gallery-nav, .zoom-btn, .reset-zoom-btn');
+            interactiveElements.forEach(el => {
+                el.addEventListener('mouseenter', () => { cursorDot.classList.add('hover'); cursorOutline.classList.add('hover'); });
+                el.addEventListener('mouseleave', () => { cursorDot.classList.remove('hover'); cursorOutline.classList.remove('hover'); });
+            });
+        }
+    </script>
+</body>
+</html>
